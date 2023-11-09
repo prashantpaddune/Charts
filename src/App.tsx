@@ -2,6 +2,7 @@ import React from 'react';
 import useGetData from "./hooks/useGetData";
 import { BarChart } from "./components/BarChart";
 import LineChart from "./components/LineChart";
+import { PieChart } from "./components/PieChart";
 
 interface DayData {
     date: string;
@@ -12,6 +13,12 @@ interface WeekData {
     week: string;
     average_time: number;
 }
+
+interface RatingsData {
+    rating: string;
+    count: number;
+}
+
 
 const App: React.FC = () => {
     const { status, data, error } = useGetData();
@@ -27,6 +34,7 @@ const App: React.FC = () => {
     const {
         category_distribution = {},
         response_times = { day_wise: [], week_wise: [] },
+        user_satisfaction = { ratings: [] },
     } = data?.[0] || {};
 
 
@@ -52,6 +60,27 @@ const App: React.FC = () => {
         ],
     };
 
+    const userSatisfactionData = {
+        labels: user_satisfaction.ratings.map((rating: RatingsData) => `Rating ${rating.rating}`),
+        datasets: [{
+            data: user_satisfaction.ratings.map((rating: RatingsData) => rating.count),
+            backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF'
+            ],
+            hoverBackgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF'
+            ]
+        }]
+    };
+
     return (
         <div>
             <h1>Queries Per Category</h1>
@@ -59,6 +88,9 @@ const App: React.FC = () => {
 
             <h1>Response Time Trends</h1>
             <LineChart data={lineChartData} title="Daily and Weekly Response Times" />
+
+            <h1>User Satisfaction Ratings</h1>
+            <PieChart data={userSatisfactionData} title="User Satisfaction" />
         </div>
     );
 };
