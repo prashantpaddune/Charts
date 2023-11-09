@@ -1,0 +1,34 @@
+.chart-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.chart-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-title {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.canvas-container {
+    width: 100%;
+    height: 100%;
+}
+
+
+.pie-canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
